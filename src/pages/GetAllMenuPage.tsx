@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { List, ListItem, ListItemText, Typography, Divider, Avatar, ListItemAvatar } from "@mui/material";
 import { useNavigate } from "react-router";
-import { Menu } from "../types.ts";
+import type { Menu } from "../types.ts";
 
 
 export default function GetAllMenu() {
@@ -11,19 +11,12 @@ export default function GetAllMenu() {
 
     useEffect(() => {
     const GetMenus = async () => {
-        const getMenu = await fetch('http://localhost:5174/api/list-menu', {
-            method: 'GET',
-            headers: {
-                "content-type": "application/json",
-            },
-        })
+        const getMenu = await fetch('http://localhost:5173/api/list-menu')
         const data = await getMenu.json();
-        setMenus(data)
+        setMenus(data);
     }
-    
         GetMenus();
-    },[menus])
-
+    },[])
 
     function updateMenu(id: string) {
         return navigate(`/update-menu/:${id}`)

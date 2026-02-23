@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Box, Button, FormControl, Select } from '@mui/material'
+import { Box, Button, FormControl } from '@mui/material'
+import { useNavigate } from "react-router";
 export default function FormAddMenuPages() {
     const [id, setId] = useState('')
     const [nama, setNama] = useState('')
@@ -8,7 +9,9 @@ export default function FormAddMenuPages() {
     const [deskripsi, setDeskripsi] = useState('')
     const [label, setLabel] = useState('')
     const [kategori, setKategori] = useState('')
-
+    const [createdAt, setCreatedAt] = useState('')
+    const [updatedAt, setUpdatedAt] = useState('')
+    const navigate = useNavigate();
     const handleAddMenu = async () => {
 
         const response = await fetch('api/create-menu', {
@@ -21,19 +24,23 @@ export default function FormAddMenuPages() {
                 size,
                 deskripsi,
                 label,
-                kategori
+                kategori,
+                createdAt,
+                updatedAt
             })
         });
 
         if (!response.ok) {
-            alert("Login gagal");
+            alert(" gagal");
             return;
         }
+        navigate('/list-menu');
     }
 
     return (
         <>
             <Box>
+                <h1>Create Menu</h1>
                 <FormControl component="form" sx={{ maxWidth: 'sm' }}>
 
                     <input type="hidden" id="id" value={crypto.randomUUID()} onChange={(e) => setId(e.target.value)} />
@@ -43,30 +50,33 @@ export default function FormAddMenuPages() {
                     <label htmlFor="harga">harga</label>
                     <input type="harga" id="harga" value={harga} onChange={(e) => setHarga(e.target.value)} />
                     <label htmlFor="size">size</label>
-\                    <Select labelId="demo-simple-select-label"
-                        id="demo-simple-select" onChange={(e) => setSize(e.target.value)} value={size}>
+                    <select onChange={(e) => setSize(e.target.value)} value={size}>
                         <option value="small">small</option>
                         <option value="medium">medium</option>
                         <option value="large">large</option>
-                    </Select>
+                    </select>
                     <label htmlFor="deskripsi">deskripsi</label>
                     <input type="deskripsi" id="deskripsi" value={deskripsi} onChange={(e) => setDeskripsi(e.target.value)} />
 
                     <label htmlFor="label">label</label>
-                    <Select labelId="demo-simple-select-label"
-                        id="demo-simple-select" onChange={(e) => setLabel(e.target.value)} value={size}>
+                    <select  onChange={(e) => setLabel(e.target.value)} value={label}>
                         <option value="vegan">vegan</option>
                         <option value="gluten_free">gluten_free</option>
                         <option value="halal">halal</option>
                         <option value="low_cal">low_cal</option>
-                    </Select>
+                    </select>
                     <label htmlFor="kategori">kategori</label>
-                    <input type="kategori" id="kategori" value={kategori} onChange={(e) => setKategori(e.target.value)} />
+                    <select onChange={(e) => setKategori(e.target.value)} value={kategori}>
+                        <option value="makanan" >MAKANAN</option>
+                        <option value="minuman" >MINUMAN</option>
+                    </select>
+                    <input type="hidden" id="createdAt" value={new Date().toString()} onChange={(e) => setCreatedAt(e.target.value)} />
+                    <input type="hidden" id="updatedAt" value={new Date().toString()} onChange={(e) => setUpdatedAt(e.target.value)} />
                     <br />
-                    <Button variant="contained" type="button" onClick={handleAddMenu}>Login</Button>
-
+                    <Button variant="contained" type="button" onClick={handleAddMenu}>Add Menu</Button>
                 </FormControl>
             </Box>
+            
 
 
 

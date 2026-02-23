@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-import { Menu } from "../types";
+import type { Menu } from "../types";
 import { List, ListItemAvatar, Avatar, ListItemText, Typography } from "@mui/material";
 
-export default function PostDetail() {
+export default function MenuDetails() {
     const { id } = useParams();
     const [menu, setMenu] = useState<Menu>();
     const navigate = useNavigate();
