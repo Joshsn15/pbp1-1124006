@@ -1,32 +1,25 @@
-// import { useState, useEffect } from "react";
-// import { useParams, useNavigate } from "react-router";
-// import type { Menu } from "../types";
+import {  useEffect } from "react";
+import { useParams, useNavigate } from "react-router";
 
-// function DeleteMenu(){
-//     const { id } = useParams();
-//     const [menu, setMenu] = useState<Menu>();
-//     const navigate = useNavigate();
+export default function DeleteMenu(){
+    const { id } = useParams();
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const deleteMenu = async () => {
+            const response = await fetch(`/api/delete-menu/${id}`, {
+                method: 'DELETE'
+            });
+            if(response.status == 200){
+                alert("menu berhasil dihapus");
+                console.log(id);
+            }
+            
+        }
+        navigate('/list-menu');
+        deleteMenu();
 
-//     useEffect(() => {
-//         const GetMenus = async () => {
-//             const getMenu = await fetch('http://localhost:5174/api/list-menu', {
-//                 method: 'DELETE',
-//                 headers: {
-//                     "content-type": "application/json",
-//                 },
-//             })
-//         }
-
-//         GetMenus();
-//     }, [menu])
-
-//     return <>
-//         <div>
-//             <center>
-//                 <h1>Menu berhasil dihapus</h1>
-//                 {navigate('/list-menu')}
-//             </center>
-//         </div>
-//     </>
-// }
+    })
+    
+    
+}
